@@ -111,19 +111,19 @@ d3.csv('./diff.csv', function(rows) {
             .text(function(d) { return d.name; });
     
     
-        function filt2(d) {
+        function testNode(d) {
             return d.name === 'Gr1' && d.parent.name === 'Spleen';
         }
-        function filt(d) {
-            return filt2(d[0]) || filt2(d[d.length - 1]);
+        function testLink(d) {
+            return testNode(d[0]) || testNode(d[d.length - 1]);
         }
         for (var i = 0; i < ary.length; ++i) {
             s.selectAll("path.link" + i)
                 .data(bundle(links[ary[i]]))
                 .enter().append("svg:path")
                     .attr("d", line)
-                    .attr("class", function(d) { return cls + (filt(d) ? " hi" : ""); }) 
-                    .style("stroke", function(d) { return filt(d) ? "black" : linkColor(ary[i]); });
+                    .attr("class", function(d) { return cls + (testLink(d) ? " hi" : ""); })
+                    .style("stroke", function(d) { return testLink(d) ? "black" : linkColor(ary[i]); });
         }
     }
 
